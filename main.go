@@ -54,31 +54,6 @@ func query(city string) (WeatherData, error) {
 	}
 	return d, nil
 }
-func fromHTMLForm(w http.ResponseWriter, r *http.Request) {
-	city := r.FormValue("City")
-
-	// data := &Data{city}
-
-	// b, err := json.Marshal(data)
-	// if err != nil {
-	// 	http.Error(w, err.Error(), 500)
-	// 	return
-	// }
-
-	// f, err :=
-	desc, err := query(city)
-	if err == nil {
-		return
-	}
-	json.NewEncoder(w).Encode(desc)
-	// if err != nil {
-	// 	http.Error(w, err.Error(), 500)
-	// 	return
-	// }
-
-	// f.Write(b)
-	// f.Close()
-}
 
 var tpl *template.Template
 
@@ -109,27 +84,8 @@ func processor(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json;charset=utf-8")
 	json.NewEncoder(w).Encode(data)
-	// d := struct {
-	// 	City string
-	// }{
-	// 	City: city,
-	// }
-	//tpl.ExecuteTemplate(w, "processor.gohtml", d)
 
 }
 func index(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "index.gohtml", nil)
 }
-
-/*
-func(w http.ResponseWriter, r *http.Request) {
-		city := strings.SplitN(r.URL.Path, "/", 3)[2]
-		data, err := query(city)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		w.Header().Set("Content-Type", "application/json;charset=utf-8")
-		json.NewEncoder(w).Encode(data)
-	}
-*/
